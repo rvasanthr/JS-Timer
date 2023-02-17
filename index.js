@@ -1,1 +1,8 @@
-console.log('Hi there, this is the setup phase');
+// The timer class
+class Timer {
+    constructor(durationInput, startButton, pauseButton) {
+        this.durationInput = durationInput;
+        this.startButton = startButton;
+        this.pauseButton = pauseButton;
+    }
+}
