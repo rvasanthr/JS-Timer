@@ -1,32 +1,44 @@
 // The timer class
 class Timer {
-    constructor(durationInput, startButton, pauseButton) {
+    constructor(durationInput, startButton, pauseButton, callbacks) {
         this.durationInput = durationInput;
         this.startButton = startButton;
         this.pauseButton = pauseButton;
         // Event Listeners
         this.startButton.addEventListener('click', this.start);
         this.pauseButton.addEventListener('click', this.pause);
+        // Checking whether a fourth argument has been passed
+        if (callbacks) {
+            this.timerStart = callbacks.onStart;
+            this.tickingTimer = callbacks.onTick;
+            this.timerPause = callbacks.onPause;
+            this.timerStop = callbacks.onComplete;
+        }
     }
 
     // Methods
     start = () => {
+        // Notifies start of timer, if it exists
+        if (this.timerStart) { this.timerStart(); }
         // Decided against manual trigger, only setInterval trigger
         this.intervalId = setInterval(this.tick, 1000);
     }
 
     pause = () => {
         clearInterval(this.intervalId);
+        // If exists, notifies Pause to user only when timer > 0
+        if (this.timerPause && this.timeRemaining > 0) {
+            this.timerPause();
+        }
     }
 
     tick = () => {
-        // console.log('tick');
-        // const timeRemaining = this.durationInput.value;
-        // this.durationInput.value = this.timeValue - 1;
-        // If timer goes to 0, stop it from proceeding
+        // Stops timer counting down from 0 and lower
         if (this.timeRemaining <= 0) {
+            if (this.timerStop) { this.timerStop(); }
             this.pause();
         } else {
+            if (this.tickingTimer) { this.tickingTimer(); }
             this.timeRemaining -= 1;
         }
     }
@@ -47,4 +59,18 @@ const startButton = document.querySelector('#start');
 const pauseButton = document.querySelector('#pause');
 
 // Timer Object
-const timer = new Timer(durationInput, startButton, pauseButton);
+const timer = new Timer(durationInput, startButton, pauseButton, {
+    // Object argument to notify outside world of timer activity. 
+    onStart() {
+        console.log('Timer Started');
+    },
+    onTick() {
+        console.log('Ticking...');
+    },
+    onPause() {
+        console.log('Timer Paused...');
+    },
+    onComplete() {
+        console.log('Timer Complete');
+    }
+});
