@@ -23,7 +23,12 @@ class Timer {
         // console.log('tick');
         // const timeRemaining = this.durationInput.value;
         // this.durationInput.value = this.timeValue - 1;
-        this.timeRemaining -= 1;
+        // If timer goes to 0, stop it from proceeding
+        if (this.timeRemaining <= 0) {
+            this.pause();
+        } else {
+            this.timeRemaining -= 1;
+        }
     }
 
     // Applying getter and setter for tick
