@@ -8,6 +8,7 @@ const circle = document.querySelector('circle');
 const perimeter = 2 * Math.PI * circle.getAttribute('r');
 // Setting the circle's circumference
 circle.setAttribute('stroke-dasharray', perimeter);
+let newOffset = 0;
 // Timer Object
 const timer = new Timer(durationInput, startButton, pauseButton, {
     // Object argument to notify outside world of timer activity. 
@@ -15,7 +16,9 @@ const timer = new Timer(durationInput, startButton, pauseButton, {
         console.log('Timer Started');
     },
     onTick() {
-        console.log('Ticking...');
+        // console.log('Ticking...');
+        circle.setAttribute('stroke-dashoffset', newOffset);
+        newOffset -= 50;
     },
     onPause() {
         console.log('Timer Paused...');
