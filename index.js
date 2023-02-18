@@ -8,17 +8,24 @@ const circle = document.querySelector('circle');
 const perimeter = 2 * Math.PI * circle.getAttribute('r');
 // Setting the circle's circumference
 circle.setAttribute('stroke-dasharray', perimeter);
-let newOffset = 0;
+// Variables
+let newOffset = 0, offset = 0;
+
 // Timer Object
-const timer = new Timer(durationInput, startButton, pauseButton, {
+const timer = new Timer(perimeter, durationInput, startButton, pauseButton, {
     // Object argument to notify outside world of timer activity. 
-    onStart() {
+    onStart(dashStep) {
         console.log('Timer Started');
+        offset = dashStep;
     },
     onTick() {
         // console.log('Ticking...');
+        // newOffset = perimeter * remainingTime / totalTime - perimeter;
+        newOffset += offset;
+        // User log
+        // console.log('Recurring offset:', newOffset);
         circle.setAttribute('stroke-dashoffset', newOffset);
-        newOffset -= 2;
+
     },
     onPause() {
         console.log('Timer Paused...');

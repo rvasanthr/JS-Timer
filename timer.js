@@ -1,6 +1,7 @@
 // The timer class
 class Timer {
-    constructor(durationInput, startButton, pauseButton, callbacks) {
+    constructor(perimeter, durationInput, startButton, pauseButton, callbacks) {
+        this.perimeter = perimeter
         this.durationInput = durationInput;
         this.startButton = startButton;
         this.pauseButton = pauseButton;
@@ -15,13 +16,20 @@ class Timer {
             this.timerStop = callbacks.onComplete;
         }
     }
-
     // Methods
     start = () => {
+
+        // Stop start from doing too many things. But we only have 1 start
+        if (!this.offset) {
+            // offset seeding triggers only once
+            this.offset = this.perimeter / this.timeRemaining;
+            // User log
+            // console.log('Seed Offset:', this.offset);
+        }
         // Notifies start of timer, if it exists
-        if (this.timerStart) { this.timerStart(); }
+        if (this.timerStart) { this.timerStart(this.offset); }
         // Decided against manual trigger, only setInterval trigger
-        this.intervalId = setInterval(this.tick, 50);
+        this.intervalId = setInterval(this.tick, 1000);
     }
 
     pause = () => {
@@ -39,7 +47,7 @@ class Timer {
             this.pause();
         } else {
             if (this.tickingTimer) { this.tickingTimer(); }
-            this.timeRemaining -= 0.05;
+            this.timeRemaining -= 1;
         }
     }
 
