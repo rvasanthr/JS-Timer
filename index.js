@@ -2,7 +2,12 @@
 const durationInput = document.querySelector('#duration');
 const startButton = document.querySelector('#start');
 const pauseButton = document.querySelector('#pause');
-
+// Circle Animation Related
+const circle = document.querySelector('circle');
+// Circumference calculation
+const perimeter = 2 * Math.PI * circle.getAttribute('r');
+// Setting the circle's circumference
+circle.setAttribute('stroke-dasharray', perimeter);
 // Timer Object
 const timer = new Timer(durationInput, startButton, pauseButton, {
     // Object argument to notify outside world of timer activity. 
