@@ -16,10 +16,20 @@ class Timer {
         }
     }
 
+    // Helpers
+    // Applying getter and setter for tick
+    get timeRemaining() {
+        return parseFloat(this.durationInput.value);
+    }
+
+    set timeRemaining(time) {
+        this.durationInput.value = time.toFixed(2);
+    }
+
     // Methods
     start = () => {
         // Notifies start of timer, if it exists
-        if (this.timerStart) { this.timerStart(); }
+        if (this.timerStart) { this.timerStart(this.timeRemaining); }
         // Decided against manual trigger, only setInterval trigger
         this.intervalId = setInterval(this.tick, 50);
     }
@@ -38,17 +48,8 @@ class Timer {
             if (this.timerStop) { this.timerStop(); }
             this.pause();
         } else {
-            if (this.tickingTimer) { this.tickingTimer(); }
+            if (this.tickingTimer) { this.tickingTimer(this.timeRemaining); }
             this.timeRemaining -= 0.05;
         }
-    }
-
-    // Applying getter and setter for tick
-    get timeRemaining() {
-        return parseFloat(this.durationInput.value);
-    }
-
-    set timeRemaining(time) {
-        this.durationInput.value = time.toFixed(2);
     }
 }

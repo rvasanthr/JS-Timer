@@ -8,17 +8,21 @@ const circle = document.querySelector('circle');
 const perimeter = 2 * Math.PI * circle.getAttribute('r');
 // Setting the circle's circumference
 circle.setAttribute('stroke-dasharray', perimeter);
-let newOffset = 0;
+// Create two variables to aid in animation calculation
+let newOffset, timeTotal = 0;
 // Timer Object
 const timer = new Timer(durationInput, startButton, pauseButton, {
     // Object argument to notify outside world of timer activity. 
-    onStart() {
+    onStart(totalDuration) {
         console.log('Timer Started');
+        timeTotal = totalDuration;
     },
-    onTick() {
+    onTick(timeLeft) {
         // console.log('Ticking...');
+        // BODMAS or PEMDAS applied left to right
+        newOffset = (perimeter * timeLeft / timeTotal) - perimeter;
         circle.setAttribute('stroke-dashoffset', newOffset);
-        newOffset -= 2;
+        // newOffset -= 2;
     },
     onPause() {
         console.log('Timer Paused...');
