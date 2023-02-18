@@ -21,7 +21,7 @@ class Timer {
         // Notifies start of timer, if it exists
         if (this.timerStart) { this.timerStart(); }
         // Decided against manual trigger, only setInterval trigger
-        this.intervalId = setInterval(this.tick, 1000);
+        this.intervalId = setInterval(this.tick, 50);
     }
 
     pause = () => {
@@ -39,7 +39,7 @@ class Timer {
             this.pause();
         } else {
             if (this.tickingTimer) { this.tickingTimer(); }
-            this.timeRemaining -= 1;
+            this.timeRemaining -= 0.05;
         }
     }
 
@@ -49,6 +49,6 @@ class Timer {
     }
 
     set timeRemaining(time) {
-        this.durationInput.value = time;
+        this.durationInput.value = time.toFixed(2);
     }
 }
