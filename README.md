@@ -1,4 +1,4 @@
-#A JavaScript Timer
+# A JavaScript Timer
 
 **Description:**
 A crude timer with vanilla JS.
